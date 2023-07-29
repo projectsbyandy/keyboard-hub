@@ -19,7 +19,7 @@
 							"",
 							"pm.test(\"Response will contain at least 3 entries\", ()=> {",
 							"    const responseJson = pm.response.json();",
-							"    pm.expect(responseJson.count()).to.be.greaterThan(3);",
+							"    pm.expect(responseJson.count()).to.be.greaterThan(2);",
 							"})",
 							"",
 							""
