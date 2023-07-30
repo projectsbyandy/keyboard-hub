@@ -1,8 +1,8 @@
-using KeyboardAPI.Models;
-using KeyboardAPI.Repository;
+using KeyboardApi.Models;
+using KeyboardApi.Repository.Vendor;
 using Microsoft.EntityFrameworkCore;
 
-namespace KeyboardAPI;
+namespace KeyboardApi;
 
 public static class VendorApi
 {

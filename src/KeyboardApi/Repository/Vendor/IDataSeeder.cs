@@ -1,4 +1,4 @@
-namespace KeyboardAPI.Repository;
+namespace KeyboardApi.Repository.Vendor;
 
 public interface IDataSeeder
 { 

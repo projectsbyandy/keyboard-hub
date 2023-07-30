@@ -1,7 +1,8 @@
+#nullable disable
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace KeyboardAPI.Models;
+namespace KeyboardApi.Models;
 
 public class Vendor
 {

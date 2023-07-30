@@ -1,7 +1,6 @@
-using KeyboardAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace KeyboardAPI.Repository;
+namespace KeyboardApi.Repository.Vendor;
 
 public class VendorDbContext : DbContext
 {
@@ -9,5 +8,5 @@ public class VendorDbContext : DbContext
     {
     }
 
-    public DbSet<Vendor> Vendors => Set<Vendor>();
+    public DbSet<Models.Vendor> Vendors => Set<Models.Vendor>();
 }

@@ -1,6 +1,4 @@
-using KeyboardAPI.Models;
-
-namespace KeyboardAPI.Repository;
+namespace KeyboardApi.Repository.Vendor;
 
 public class DataSeeder : IDataSeeder
 {
@@ -15,7 +13,7 @@ public class DataSeeder : IDataSeeder
     {
         if (_vendorDbContext.Vendors.Any() is false)
         {
-            var vendors = new List<Vendor>()
+            var vendors = new List<Models.Vendor>()
             {
                 new() { Id = Guid.NewGuid(), Name = "Prototypist", Brands = new() {"NovelKeys", "TGR", "Geon"}},
                 new() { Id = Guid.NewGuid(), Name = "MyKbs", Brands = new() {"Keykobo", "CYSM", "Amazon"} },
