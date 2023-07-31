@@ -1,17 +1,19 @@
 using KeyboardApi.Models;
+using KeyboardApi.Models.Config;
 
 namespace KeyboardApi.Repository.Auth;
 
 public class UserRepository : IUserRepository
 {
-    private readonly List<User> _users = new()
+    private readonly SeedUsers _seedUsers;
+    
+    public UserRepository(SeedUsers seedUsers)
     {
-        new User("Andy Peters", "Andy.Peters@test.com", "tester123"),
-        new User("Emma Smith", "Emma.Smith@test.com", "tester456")
-    };
+        _seedUsers = seedUsers;
+    }
     
     public User? GetUser(string email)
     {
-        return _users.Find(user => user.Email.Equals(email, StringComparison.InvariantCultureIgnoreCase));
+        return _seedUsers.Find(user => user.Email.Equals(email, StringComparison.InvariantCultureIgnoreCase));
     }
 }

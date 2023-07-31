@@ -2,7 +2,7 @@ using KeyboardApi.Models;
 using KeyboardApi.Repository.Vendor;
 using Microsoft.EntityFrameworkCore;
 
-namespace KeyboardApi;
+namespace KeyboardApi.Routes;
 
 public static class VendorApi
 {

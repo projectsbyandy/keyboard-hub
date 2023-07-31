@@ -1,7 +1,8 @@
 using System.Text;
-using KeyboardApi;
+using KeyboardApi.Extensions;
 using KeyboardApi.Repository.Auth;
 using KeyboardApi.Repository.Vendor;
+using KeyboardApi.Routes;
 using KeyboardApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -12,13 +13,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+// Add Config
+var config = ConfigExtensions.GetConfiguration();
+builder.Services.AddConfigurationSupport(config);
+
 // Auth Services
 builder.Services.AddSingleton<ITokenService, TokenService>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
+
 // Auth Middleware
-var test = builder.Configuration["Jwt:Issuer"];
-var test1 = builder.Configuration["Jwt:Audience"];
-var test3 = builder.Configuration["Jwt:Key"];
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(options =>
 {
@@ -29,10 +32,10 @@ builder.Services.AddAuthentication(options =>
 {
     o.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
+        ValidIssuer = config["Jwt:Issuer"],
+        ValidAudience = config["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey
-            (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+            (Encoding.UTF8.GetBytes(config["Jwt:Key"])),
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = false,
@@ -54,6 +57,7 @@ builder.Logging.ClearProviders();
 
 // Serilog configuration        
 var logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
     .WriteTo.Console()
     .CreateLogger();
 

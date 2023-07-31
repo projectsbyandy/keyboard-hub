@@ -7,6 +7,100 @@
 	},
 	"item": [
 		{
+			"name": "JWT Auth",
+			"item": [
+				{
+					"name": "ValidToken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status Code\", ()=> {",
+									"    pm.expect(pm.response.code).to.eql(201);",
+									"})",
+									"",
+									"pm.test(\"Response will contain a token\", ()=> {",
+									"    pm.expect(pm.response.text().length).to.be.greaterThan(10);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"Andy\",\n  \"email\": \"andy.peters@test.com\",\n  \"password\": \"tester123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status Code\", ()=> {",
+									"    pm.expect(pm.response.code).to.eql(404);",
+									"})",
+									"",
+									"pm.test(\"Response will contain a token\", ()=> {",
+									"    pm.expect(pm.response.text()).to.contain(\"andy.peters2@test.com\");",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"Andy\",\n  \"email\": \"andy.peters2@test.com\",\n  \"password\": \"tester123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Vendors",
 			"event": [
 				{
