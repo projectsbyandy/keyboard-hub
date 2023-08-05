@@ -1,3 +1,4 @@
+#nullable disable
 namespace KeyboardApi.Models.Config;
 
 public record JwtConfig

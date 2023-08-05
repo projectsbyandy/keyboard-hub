@@ -1,3 +1,4 @@
+#nullable disable
 namespace KeyboardApi.Models;
 
 public class User

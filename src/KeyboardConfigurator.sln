@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyboardConfigurator", "KeyboardApi\KeyboardApi.csproj", "{CA36A8E7-5F00-4026-892D-40468C01A24B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyboardApi.Integration.Tests", "KeyboardApi.Integration.Tests\KeyboardApi.Integration.Tests.csproj", "{23946D14-7927-4BE0-99BC-88CA563F8392}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{CA36A8E7-5F00-4026-892D-40468C01A24B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA36A8E7-5F00-4026-892D-40468C01A24B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA36A8E7-5F00-4026-892D-40468C01A24B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23946D14-7927-4BE0-99BC-88CA563F8392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23946D14-7927-4BE0-99BC-88CA563F8392}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23946D14-7927-4BE0-99BC-88CA563F8392}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23946D14-7927-4BE0-99BC-88CA563F8392}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

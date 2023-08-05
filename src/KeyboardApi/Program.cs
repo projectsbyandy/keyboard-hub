@@ -116,12 +116,18 @@ app.Run();
 async Task SeedData(IHost app)
 {
     var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
-
-    using (var scope = scopedFactory?.CreateScope())
+    Guard.Against.Null(scopedFactory);
+    
+    using (var scope = scopedFactory.CreateScope())
     {
-        var dataSeeder = scope?.ServiceProvider.GetService<IDataSeeder>();
+        var dataSeeder = scope.ServiceProvider.GetService<IDataSeeder>();
+        Guard.Against.Null(dataSeeder);
+        
         await dataSeeder.Seed();
     }
     
     logger.Information("Test Data seeded");
 }
+
+// For integration Tests
+public partial class Program { }
