@@ -1,5 +1,6 @@
 using KeyboardApi.Models;
 using KeyboardApi.Repository.Vendor;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace KeyboardApi.Routes;
@@ -10,6 +11,8 @@ public static class VendorApi
     {
         // Setup Vendor Api
         app.MapGet("/keyboard/vendors", async (VendorDbContext db) => await db.Vendors.ToListAsync());
+
+        app.MapGet("/keyboard/vendor-with-auth", [Authorize] async (VendorDbContext db) => await db.Vendors.ToListAsync());
 
         app.MapGet("/keyboard/vendors/{id}", async (Guid id, VendorDbContext db) =>
             await db.Vendors.FindAsync(id)
@@ -41,8 +44,7 @@ public static class VendorApi
                 return Results.NotFound("Vendor not found");
 
             vendorToUpdate.Name = vendor.Name;
-            vendorToUpdate.Brands = vendor.Brands;
-
+            
             await db.SaveChangesAsync();
 
             return Results.NoContent();

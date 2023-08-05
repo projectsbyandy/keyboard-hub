@@ -15,9 +15,9 @@ public class DataSeeder : IDataSeeder
         {
             var vendors = new List<Models.Vendor>()
             {
-                new() { Id = Guid.NewGuid(), Name = "Prototypist", Brands = new() {"NovelKeys", "TGR", "Geon"}},
-                new() { Id = Guid.NewGuid(), Name = "MyKbs", Brands = new() {"Keykobo", "CYSM", "Amazon"} },
-                new() { Id = Guid.NewGuid(), Name = "MechUk", Brands = new List<string>() {"GMK", "Cherry", "Apple"} }
+                new() { Id = Guid.NewGuid(), Name = "Prototypist", YearsActive = 12, Live = true},
+                new() { Id = Guid.NewGuid(), Name = "MyKbs", YearsActive = 2, Live = false},
+                new() { Id = Guid.NewGuid(), Name = "MechUk", YearsActive = 99, Live = true}
             };
 
             await _vendorDbContext.AddRangeAsync(vendors);

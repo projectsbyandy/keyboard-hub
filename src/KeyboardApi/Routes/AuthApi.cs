@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using KeyboardApi.Models;
 using KeyboardApi.Models.Config;
 using KeyboardApi.Repository.Auth;
@@ -8,7 +9,7 @@ namespace KeyboardApi.Routes;
 
 public static class AuthApi
 {
-    public static void AddAuthRoutes(this IEndpointRouteBuilder app, WebApplicationBuilder builder)
+    public static void AddAuthRoutes(this IEndpointRouteBuilder app)
     {
         app.MapPost("/login", [AllowAnonymous] (User user, ITokenService tokenService, IUserRepository userRepository, JwtConfig jwtConfig) => {
 
@@ -20,9 +21,9 @@ public static class AuthApi
 
             if (locatedUser.Password == user.Password)
             {
-                var token = tokenService.BuildToken(jwtConfig.Key, jwtConfig.Issuer, locatedUser);
+                var token = tokenService.BuildToken(jwtConfig, locatedUser);
 
-                return Results.Created("Auth Token", token);   
+                return Results.Ok(token);   
             }
 
             return Results.Unauthorized();

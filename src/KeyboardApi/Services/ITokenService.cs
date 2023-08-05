@@ -1,8 +1,9 @@
 using KeyboardApi.Models;
+using KeyboardApi.Models.Config;
 
 namespace KeyboardApi.Services;
 
 public interface ITokenService
 {
-    public string BuildToken(string key, string issuer, User user);
+    public string BuildToken(JwtConfig jwtConfig, User user);
 }

@@ -2,27 +2,31 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using KeyboardApi.Models;
+using KeyboardApi.Models.Config;
 using Microsoft.IdentityModel.Tokens;
 
 namespace KeyboardApi.Services;
 
 public class TokenService : ITokenService
 {
-    private readonly TimeSpan _expiryDuration = new TimeSpan(0, 30, 0);
-    
-    public string BuildToken(string key, string issuer, User user)
+    public string BuildToken(JwtConfig jwtConfig, User user)
     {
-        var claims = new[]
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Key));
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.Email),
-            new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
+            new(JwtRegisteredClaimNames.Sub, user.Email),
+            new(JwtRegisteredClaimNames.Email, user.Email),
+            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
- 
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
-        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
-        var tokenDescriptor = new JwtSecurityToken(issuer, issuer, claims,
-            expires: DateTime.Now.Add(_expiryDuration), signingCredentials: credentials);
-        
-        return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
+
+        var jwtSecurityToken = new JwtSecurityToken(
+            expires: DateTime.Now.AddMinutes(30),
+            claims: claims,
+            signingCredentials: credentials,
+            issuer: jwtConfig.Issuer,
+            audience: jwtConfig.Audience);
+
+       return new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
     }
 }

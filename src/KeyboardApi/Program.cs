@@ -1,4 +1,5 @@
 using System.Text;
+using Ardalis.GuardClauses;
 using KeyboardApi.Extensions;
 using KeyboardApi.Repository.Auth;
 using KeyboardApi.Repository.Vendor;
@@ -7,6 +8,7 @@ using KeyboardApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,25 +34,52 @@ builder.Services.AddAuthentication(options =>
 {
     o.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidIssuer = config["Jwt:Issuer"],
-        ValidAudience = config["Jwt:Audience"],
+        ValidIssuer = Guard.Against.NullOrEmpty(config["Jwt:Issuer"]),
+        ValidAudience = Guard.Against.NullOrEmpty(config["Jwt:Audience"]),
         IssuerSigningKey = new SymmetricSecurityKey
-            (Encoding.UTF8.GetBytes(config["Jwt:Key"])),
+            (Encoding.UTF8.GetBytes(Guard.Against.NullOrEmpty(config["Jwt:Key"]))),
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidateLifetime = false,
+        ValidateLifetime = true,
         ValidateIssuerSigningKey = true
     };
 });
 
 // Add fake db to container.
 builder.Services.AddDbContext<VendorDbContext>(opt => opt.UseInMemoryDatabase("Vendor"));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddTransient<IDataSeeder, DataSeeder>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(option =>
+{
+    option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
+    option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter a valid token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+    option.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 // remove default logging providers
 builder.Logging.ClearProviders();
@@ -67,14 +96,7 @@ var app = builder.Build();
 
 // Setup Custom Routes
 app.AddVendorRoutes();
-app.AddAuthRoutes(builder);
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.AddAuthRoutes();
 
 app.UseHttpsRedirection();
 
@@ -82,6 +104,12 @@ await SeedData(app);
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.Run();
 
