@@ -35,8 +35,4 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
-
-    <ItemGroup>
-        <InternalsVisibleTo Include="KeyboardApi.Integration.Tests" />
-    </ItemGroup>
 </Project>

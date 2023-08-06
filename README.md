@@ -15,7 +15,7 @@ Demonstrate the use of
 
 ## Local configuration
 `appsettings.local.json`
-- add key `hK4*bnvjfBaXC2!1Ldg3IvnW69AQPq`
+- add key `C1C6E14D94B32fdfasdfs57526E64D52181C61C`
 
 ## Troubleshooting
 
