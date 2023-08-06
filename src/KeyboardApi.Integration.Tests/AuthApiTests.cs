@@ -10,14 +10,16 @@ namespace KeyboardApi.Integration.Tests;
 public class AuthApiTests
 {
      private HttpClient sut;
-
+     
     [SetUp]
     public void Setup()
     {
-        var application = new WebApplicationFactory<Program>().WithWebHostBuilder(builder => { });
-        sut = application.CreateClient();
+            var application = new WebApplicationFactory<Program>().WithWebHostBuilder(builder => { });
+            sut = application.CreateClient();
     }
 
+    #region Basic Api Auth Tests
+    
     [TestCase("Mary", "doesnotexist@test.com", "tester456", HttpStatusCode.NotFound)]
     [TestCase("Mary", "mary.rogers@test.com", "tester456", HttpStatusCode.OK)]
     [TestCase("Andy", "andy.peters@test.com", "tester123", HttpStatusCode.OK)]
@@ -30,17 +32,17 @@ public class AuthApiTests
         response.StatusCode.Should().Be(expectedStatusCode);
     }
     
-    [TestCase("Mary", "mary.rogers@test.com", "tester456", HttpStatusCode.OK)]
-    [TestCase("Andy", "andy.peters@test.com", "tester123", HttpStatusCode.OK)]
-    public async Task Verify_Generated_Token_Length_Test(string username, string email, string password, HttpStatusCode expectedStatusCode)
+    [TestCase("Mary", "mary.rogers@test.com", "tester456")]
+    [TestCase("Andy", "andy.peters@test.com", "tester123")]
+    public async Task Verify_Generated_Token_Length_Test(string username, string email, string password)
     {
         // Given / When
         var response = await CallAuthAsync(username, email, password);
-        var responseContent = await response.Content.ReadAsStringAsync();
+        var authResponse = JsonSerializer.Deserialize<LoginResponse>(await response.Content.ReadAsStringAsync());
         
         // Then
-        response.StatusCode.Should().Be(expectedStatusCode);
-        responseContent.Length.Should().Be(335);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        authResponse?.Token.Length.Should().Be(333);
     }
     
     [TestCase("Mary", "doesnotexist@test.com", "tester456")]
@@ -69,6 +71,38 @@ public class AuthApiTests
         response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
     }
 
+    #endregion
+
+    #region Endpoints requiring auth tests
+
+    [TestCase("Mary", "mary.rogers@test.com", "tester456")]
+    [TestCase("Andy", "andy.peters@test.com", "tester123")]
+    public async Task Verify_Get_Vendor_With_Valid_Auth(string username, string email, string password)
+    {
+        // Given
+        var response = await CallAuthAsync("Andy", "andy.peters@test.com", "tester123");
+        var token = JsonSerializer.Deserialize<LoginResponse>(await response.Content.ReadAsStringAsync())?.Token;
+        sut.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+        
+        // When
+        var vendors = await sut.SendAsync(new HttpRequestMessage(HttpMethod.Get, "/keyboard/vendor-with-auth"));
+        
+        // Then
+        vendors.StatusCode.Should().Be(HttpStatusCode.OK);
+    }
+    
+    [Test]
+    public async Task Verify_Get_Vendor_With_Auth_Without_Token()
+    {
+        // Given / When
+        var vendors = await sut.SendAsync(new HttpRequestMessage(HttpMethod.Get, "/keyboard/vendor-with-auth"));
+        
+        // Then
+        vendors.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+    }
+    
+    #endregion
+
     private async Task<HttpResponseMessage> CallAuthAsync(string username, string email, string password)
     {
         var user = new User
@@ -78,11 +112,12 @@ public class AuthApiTests
             Password = password
         };
 
-        return await sut.SendAsync(new HttpRequestMessage(HttpMethod.Post, "/login") {
+        return await sut.SendAsync(new HttpRequestMessage(HttpMethod.Post, "/login")
+        {
             Content = new StringContent(JsonSerializer.Serialize(user), Encoding.UTF8, "application/json")
         });
     }
-    
+
     [TearDown]
     public void DeleteResources()
     {

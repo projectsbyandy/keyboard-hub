@@ -22,7 +22,10 @@ public static class AuthApi
             {
                 var token = tokenService.BuildToken(jwtConfig, locatedUser);
 
-                return Results.Ok(token);   
+                return Results.Ok(new LoginResponse()
+                {
+                    Token = token
+                });   
             }
 
             return Results.Unauthorized();
