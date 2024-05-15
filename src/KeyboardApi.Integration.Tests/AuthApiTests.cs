@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace KeyboardApi.Integration.Tests;
 
+[Parallelizable(ParallelScope.Fixtures)]
 public class AuthApiTests
 {
      private HttpClient sut;
+     private static readonly SemaphoreSlim Semaphore = new(1);
+     private const int SemaphoreMaxWait = 1000;
      
     [SetUp]
     public void Setup()
@@ -105,17 +108,26 @@ public class AuthApiTests
 
     private async Task<HttpResponseMessage> CallAuthAsync(string username, string email, string password)
     {
-        var user = new User
-        {
-            Username = username,
-            Email = email,
-            Password = password
-        };
+        Semaphore.Wait(SemaphoreMaxWait);
 
-        return await sut.SendAsync(new HttpRequestMessage(HttpMethod.Post, "/login")
+        try
         {
-            Content = new StringContent(JsonSerializer.Serialize(user), Encoding.UTF8, "application/json")
-        });
+            var user = new User
+            {
+                Username = username,
+                Email = email,
+                Password = password
+            };
+
+            return await sut.SendAsync(new HttpRequestMessage(HttpMethod.Post, "/login")
+            {
+                Content = new StringContent(JsonSerializer.Serialize(user), Encoding.UTF8, "application/json")
+            });
+        }
+        finally
+        {
+            Semaphore.Release();
+        }
     }
 
     [TearDown]
