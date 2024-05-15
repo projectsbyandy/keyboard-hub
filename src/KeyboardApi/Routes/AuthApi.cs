@@ -18,7 +18,7 @@ public static class AuthApi
                 return Results.NotFound(user.Email);
             }
 
-            if (locatedUser.Password == user.Password)
+            if (locatedUser.Password.Equals(user.Password))
             {
                 var token = tokenService.BuildToken(jwtConfig, locatedUser);
 
