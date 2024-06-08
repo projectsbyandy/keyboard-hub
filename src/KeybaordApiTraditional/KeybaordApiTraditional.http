@@ -1,0 +1,6 @@
+@KeybaordApiTraditional_HostAddress = http://localhost:5013
+
+GET {{KeybaordApiTraditional_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

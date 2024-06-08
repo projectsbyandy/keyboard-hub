@@ -1,8 +1,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using KeyboardApi.Models;
-using KeyboardApi.Models.Config;
+using Keyboard.Common.Models;
+using Keyboard.Common.Models.Config;
 using Microsoft.IdentityModel.Tokens;
 
 namespace KeyboardApi.Services;

@@ -1,5 +1,5 @@
 #nullable disable
-namespace KeyboardApi.Models.Config;
+namespace Keyboard.Common.Models.Config;
 
 public record JwtConfig
 {

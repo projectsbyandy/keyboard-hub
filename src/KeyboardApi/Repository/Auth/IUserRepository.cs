@@ -1,4 +1,4 @@
-using KeyboardApi.Models;
+using Keyboard.Common.Models;
 
 namespace KeyboardApi.Repository.Auth;
 

@@ -1,5 +1,5 @@
 #nullable disable
-namespace KeyboardApi.Models;
+namespace Keyboard.Common.Models;
 
 public class User
 {

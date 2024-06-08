@@ -1,6 +1,6 @@
 using System.Text.Json;
 using FluentAssertions;
-using KeyboardApi.Models;
+using Keyboard.Common.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace KeyboardApi.Integration.Tests;

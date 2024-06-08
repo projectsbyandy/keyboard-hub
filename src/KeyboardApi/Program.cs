@@ -130,4 +130,7 @@ async Task SeedData(IHost app)
 }
 
 // For integration Tests
-public partial class Program { }
+namespace KeyboardApi
+{
+    public partial class Program { }
+}

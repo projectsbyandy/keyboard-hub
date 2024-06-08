@@ -1,5 +1,5 @@
-using KeyboardApi.Models;
-using KeyboardApi.Models.Config;
+using Keyboard.Common.Models;
+using Keyboard.Common.Models.Config;
 using KeyboardApi.Repository.Auth;
 using KeyboardApi.Services;
 using Microsoft.AspNetCore.Authorization;

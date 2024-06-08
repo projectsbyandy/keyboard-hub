@@ -1,4 +1,4 @@
-using KeyboardApi.Models;
+using Keyboard.Common.Models;
 using KeyboardApi.Repository.Vendor;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +20,7 @@ public static class VendorApi
                 ? Results.Ok(vendor)
                 : Results.NotFound());
 
-        app.MapPost("/keyboard/vendors", async (Vendor vendor, VendorDbContext db) =>
+        app.MapPost("/keyboard/vendor", async (Vendor vendor, VendorDbContext db) =>
         {
             db.Vendors.Add(vendor);
 

@@ -13,7 +13,7 @@ public class DataSeeder : IDataSeeder
     {
         if (_vendorDbContext.Vendors.Any() is false)
         {
-            var vendors = new List<Models.Vendor>()
+            var vendors = new List<Keyboard.Common.Models.Vendor>()
             {
                 new() { Id = Guid.NewGuid(), Name = "Prototypist", YearsActive = 12, Live = true},
                 new() { Id = Guid.NewGuid(), Name = "MyKbs", YearsActive = 2, Live = false},

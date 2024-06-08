@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace KeyboardApi.Models;
+namespace Keyboard.Common.Models;
 
 public class Vendor
 {
