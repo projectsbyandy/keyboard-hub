@@ -1,17 +1,21 @@
-# min-jwt
-
-## Introduction
+# Keyboard Hub
+Is a collection of keyboard related services
 
 Demonstrate the use of
 - Minimal API
 - JWT
 - Integration tests
-  - using WebApplicationFactory
+  - using WebApplicationFactory and mocks
+
+## Swagger
+Call `/login` to generate the token
+Add token to swagger auth
+Call Vendor endpoints
 
 ## Docker
 1. Navigate to `src` folder
-2. To Build - `docker build -t keyboardapi -f ./KeyboardApi/Dockerfile .`
-3. To Run `docker run -ti --rm -p 54623:80 keyboardapi`
+2. To Build - `docker build -t VendorApi -f ./VendorApi/Dockerfile .`
+3. To Run `docker run -ti --rm -p 54623:80 VendorApi`
 
 ## Local configuration
 `appsettings.local.json`
