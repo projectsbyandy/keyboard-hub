@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace VendorApi.Integration.Tests.Setup;
 
-internal class KeyboardApiFactory(ExternalServicesMock externalServicesMock) : WebApplicationFactory<Program>
+internal class VendorApiFactory(ExternalServicesMock externalServicesMock) : WebApplicationFactory<Program>
 {
     protected override IHost CreateHost(IHostBuilder builder)
     {

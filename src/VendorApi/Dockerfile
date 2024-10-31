@@ -5,16 +5,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["KeyboardApi/KeyboardApi.csproj", "KeyboardApi/"]
-RUN dotnet restore "KeyboardApi/KeyboardApi.csproj"
+COPY ["VendorApi/VendorApi.csproj", "VendorApi/"]
+RUN dotnet restore "VendorApi/VendorApi.csproj"
 COPY . .
-WORKDIR "/src/KeyboardApi"
-RUN dotnet build "KeyboardApi.csproj" -c Release -o /app/build
+WORKDIR "/src/VendorApi"
+RUN dotnet build "VendorApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "KeyboardApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "VendorApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "KeyboardApi.dll"]
+ENTRYPOINT ["dotnet", "VendorApi.dll"]
