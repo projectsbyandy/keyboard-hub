@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace VendorApi.Models.Vendor;
 
-public class VendorDetails
+public record VendorDetails
 {
     [JsonPropertyName("id")]
     [Key] public Guid Id { get; set; } = Guid.NewGuid();

@@ -2,14 +2,14 @@ namespace VendorApi.Integration.Tests.Setup;
 
 public abstract class IntegrationBase
 {
-    private readonly VendorApiFactory _webApplicationFactory;
+    protected readonly VendorApiFactory WebApplicationFactory;
     protected ExternalServicesMock ExternalServicesMock { get; }
 
     protected IntegrationBase()
     {
         ExternalServicesMock = new ExternalServicesMock();
-        _webApplicationFactory = new VendorApiFactory(ExternalServicesMock);
+        WebApplicationFactory = new VendorApiFactory(ExternalServicesMock);
     }
 
-    protected HttpClient GetClient() => _webApplicationFactory.CreateClient();
+    protected HttpClient GetClient() => WebApplicationFactory.CreateClient();
 }
