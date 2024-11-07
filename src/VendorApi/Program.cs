@@ -10,9 +10,12 @@ builder
     .AddInternalServices()
     .ConfigureAuthMiddleware()
     .ConfigureFakeDb()
-    .ConfigureSwagger();
+    .ConfigureSwagger()
+    .AddCorConfig();
 
 var app = builder.Build();
+
+app.UseCors("VendorFrontEnd");
 
 app
     .RegisterInternalEndpoints()

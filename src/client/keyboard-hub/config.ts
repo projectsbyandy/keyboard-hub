@@ -1,0 +1,1 @@
+export const VENDOR_API_BASE_URL = "https://localhost:7144"

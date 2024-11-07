@@ -108,4 +108,19 @@ public static class BuilderSetup
 
         return builder;
     }
+
+    public static WebApplicationBuilder AddCorConfig(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddCors(opt =>
+        {
+            opt.AddPolicy("VendorFrontEnd", policyBuilder =>
+            {
+                var frontEndUrl = Guard.Against.NullOrEmpty(builder.Configuration["FrontendUrl"]);
+                Console.WriteLine("This is the front end url: " + frontEndUrl);
+                policyBuilder.WithOrigins(frontEndUrl).AllowAnyHeader().AllowAnyMethod();
+            });
+        });
+        
+        return builder;
+    }
 }

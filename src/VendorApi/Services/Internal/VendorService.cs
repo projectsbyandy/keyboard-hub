@@ -78,7 +78,8 @@ internal class VendorService(VendorDbContext context, ILogger logger) : IVendorS
                 return VendorOperationOutcome.DoesNotExist;
 
             context.Remove(vendorToUpdate);
-
+            await context.SaveChangesAsync();
+            
             return VendorOperationOutcome.Deleted;
         }
         catch (DbUpdateException ex)

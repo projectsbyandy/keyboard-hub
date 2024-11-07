@@ -11,10 +11,10 @@ public static class VendorApi
         var group = app.MapGroup("api/vendor").RequireAuthorization();
         
         group.MapGet("all", GetVendorsAsync);
-        group.MapGet("{vendorId:guid}", GetVendorByIdAsync);
+        group.MapGet("{vendorId}", GetVendorByIdAsync);
         group.MapPost("", CreateVendorAsync);
         group.MapPut("", UpdateVendorAsync);
-        group.MapDelete("{vendorId:guid}", DeleteVendorAsync);
+        group.MapDelete("{vendorId}", DeleteVendorAsync);
     }
 
     private static async Task<IResult> GetVendorsAsync(IVendorService vendorService)
@@ -77,7 +77,7 @@ public static class VendorApi
         {
             var outcome = await vendorService.DeleteAsync(vendorId);
 
-            return outcome is VendorOperationOutcome.Updated
+            return outcome is VendorOperationOutcome.Deleted
                 ? Results.Ok($"Deleted Vendor: {vendorId}")
                 : Results.Problem(outcome.ToString());
         }
