@@ -15,10 +15,10 @@ export default function VendorTableItem({vendor}: Props) {
                 <td data-label="Years Active">{vendor.yearsActive}</td>
                 <td data-label="Live">{vendor.live.toString()}</td>
                 <td data-label="Action">
-                    <Button colour="Yellow" type="submit">
-                        Create
+                    <Button color="yellow" type="submit">
+                        Edit
                     </Button>
-                    <Button colour="Red" type="button" negative onClick={async () => {
+                    <Button type="button" negative onClick={async () => {
                         await vendorApiConnector.deleteVendor(vendor.id!)
                         window.location.reload();
                     }}>

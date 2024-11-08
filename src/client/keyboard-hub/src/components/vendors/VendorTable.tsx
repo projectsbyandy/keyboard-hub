@@ -1,22 +1,22 @@
 import {useEffect, useState} from "react";
-import { VendorDto } from "../../models/vendorDto";
-import vendorApiConnector from "../../api/vendorApiConnector";
 import {Button, Container } from "semantic-ui-react";
+import { VendorDto } from "../../models/vendorDto";
 import VendorTableItem from "./VendorTableItem";
+import vendorApiConnector from "../../api/vendorApiConnector";
 
 export default function VendorTable() {
-    
+
     const [vendors, setVendors] = useState<VendorDto[]>([]);
-    
+
+    const fetchData = async() => {
+        const fetchedVendors = await vendorApiConnector.getVendors();
+        setVendors(fetchedVendors);
+    }
+
     useEffect(()=> {
-        const fetchData = async() => {
-            const fetchedVendors = await vendorApiConnector.getVendors();
-            setVendors(fetchedVendors);
-        }
-        
         fetchData();
     }, []);
-    
+
     return (
         <>
             <Container className="container-style">
@@ -30,7 +30,7 @@ export default function VendorTable() {
                         <th>Action</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody style={{textAlign: 'center'}}>
                     {vendors.length !== 0 && (
                         vendors.map((vendor, index) => (
                             <VendorTableItem key={index} vendor={vendor} />
@@ -38,7 +38,7 @@ export default function VendorTable() {
                     )}
                     </tbody>
                 </table>
-                <Button floated="right" type="button" content="Create Vendor" postive="true"></Button>
+                <Button floated="right" type="button" color="green" content="Create Vendor" postive="true"></Button>
             </Container>
         </>
     )
