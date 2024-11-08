@@ -1,8 +1,6 @@
-//import { GetVendorsResponse } from "../models/getVendorsResponse";
 import { VendorDto } from "../models/vendorDto";
 import axios, {AxiosResponse} from "axios";
 import {VENDOR_API_BASE_URL} from "../../config";
-import { GetVendorByIdResponse } from "../models/getVendorById";
 import {generateToken, setAuthHeader} from "../services/authService.ts";
 
 const vendorApiConnector = {
@@ -25,10 +23,10 @@ const vendorApiConnector = {
 
     getVendor: async (vendorId: string) : Promise<VendorDto> => {
         try {
-            const response : AxiosResponse<GetVendorByIdResponse>
+            const response : AxiosResponse<VendorDto>
                 = await axios.get(`${VENDOR_API_BASE_URL}/api/vendor/${vendorId}`);
 
-            return response.data.vendor;
+            return response.data;
         } catch (error) {
             console.log('Error fetching vendors:', error);
             throw error;

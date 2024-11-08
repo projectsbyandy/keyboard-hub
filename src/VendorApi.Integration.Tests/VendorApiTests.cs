@@ -50,7 +50,7 @@ internal class VendorApiTests : IntegrationBase
         // Assert
         vendors?.Count.Should().Be(3);
         vendors?.Any(vendor => vendor.Id == new Guid("035bb0ee-bd4b-40b5-b459-24e33e1647c0") &&
-                               vendor is { Name: "Prototypist", Live: true, YearsActive: 12 }).Should().BeTrue();
+                               vendor is { Name: "Prototypist", IsLive: true, YearsActive: 12 }).Should().BeTrue();
     }
     
     [TestCaseSource(nameof(ExpectedVendors))]
@@ -71,8 +71,8 @@ internal class VendorApiTests : IntegrationBase
     {
         get
         {
-            yield return new VendorDetails() { Id = new Guid("035bb0ee-bd4b-40b5-b459-24e33e1647c0"), Name = "Prototypist", Live = true, YearsActive = 12 };
-            yield return new VendorDetails() { Id = new Guid("8e4dab9f-8bfa-4ba5-8048-5efc7bd06fa1"), Name = "MechUk", Live = false, YearsActive = 3 };
+            yield return new VendorDetails() { Id = new Guid("035bb0ee-bd4b-40b5-b459-24e33e1647c0"), Name = "Prototypist", IsLive = true, YearsActive = 12 };
+            yield return new VendorDetails() { Id = new Guid("8e4dab9f-8bfa-4ba5-8048-5efc7bd06fa1"), Name = "MechUk", IsLive = false, YearsActive = 3 };
         }
     }
     

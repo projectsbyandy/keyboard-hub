@@ -12,9 +12,12 @@ public record VendorDetails
     [MaxLength(20)]
     public string Name { get; set; } = string.Empty;
     
+    [JsonPropertyName("description")]
+    public string Description { get; set; } = string.Empty;
+    
     [JsonPropertyName("yearsActive")]
     public int YearsActive { get; set; }
     
-    [JsonPropertyName("live")]
-    public bool Live { get; set; }
+    [JsonPropertyName("isLive")]
+    public bool IsLive { get; set; }
 }

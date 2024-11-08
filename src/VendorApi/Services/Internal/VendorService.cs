@@ -55,7 +55,7 @@ internal class VendorService(VendorDbContext context, ILogger logger) : IVendorS
 
             vendorToUpdate.Name = vendorDetails.Name;
             vendorToUpdate.YearsActive = vendorDetails.YearsActive;
-            vendorToUpdate.Live = vendorDetails.Live;
+            vendorToUpdate.IsLive = vendorDetails.IsLive;
 
             await context.SaveChangesAsync();
 

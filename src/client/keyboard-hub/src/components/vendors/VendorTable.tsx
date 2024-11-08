@@ -3,6 +3,7 @@ import {Button, Container } from "semantic-ui-react";
 import { VendorDto } from "../../models/vendorDto";
 import VendorTableItem from "./VendorTableItem";
 import vendorApiConnector from "../../api/vendorApiConnector";
+import {NavLink} from "react-router-dom";
 
 export default function VendorTable() {
 
@@ -25,8 +26,9 @@ export default function VendorTable() {
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
+                        <th>Description</th>
                         <th>YearsActive</th>
-                        <th>Live</th>
+                        <th>IsLive</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -38,7 +40,7 @@ export default function VendorTable() {
                     )}
                     </tbody>
                 </table>
-                <Button floated="right" type="button" color="green" content="Create Vendor" postive="true"></Button>
+                <Button as={NavLink} to="createVendor" floated="right" type="button" color="green" content="Create Vendor" postive="true"></Button>
             </Container>
         </>
     )
