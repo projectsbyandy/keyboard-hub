@@ -51,7 +51,10 @@ internal class VendorService(VendorDbContext context, ILogger logger) : IVendorS
             var vendorToUpdate = await context.Vendors.FindAsync(vendorDetails.Id);
 
             if (vendorToUpdate is null)
+            {
+                logger.Error("Unable to update Vendor with Id: {@Id} as it does not exist", vendorDetails.Id);
                 return VendorOperationOutcome.DoesNotExist;
+            }
 
             vendorToUpdate.Name = vendorDetails.Name;
             vendorToUpdate.YearsActive = vendorDetails.YearsActive;

@@ -8,8 +8,8 @@ export const routes: RouteObject[] = [
         path: '/',
         element: <App/>,
         children: [
-            { path: 'createVendor', element: <VendorForm key={'create'}/>},
-            { path: 'editVendor/:id', element: <VendorForm key={'edit'}/>},
+            { path: 'createVendor', element: <VendorForm key={'create'} action={"create"}/>},
+            { path: 'editVendor/:id', element: <VendorForm key={'edit'} action={"edit"}/>},
             { path: '*', element: <VendorTable/>}
         ]
     }

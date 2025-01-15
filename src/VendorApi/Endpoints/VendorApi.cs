@@ -62,7 +62,7 @@ public static class VendorApi
 
             return outcome is VendorOperationOutcome.Updated
                 ? Results.Ok($"Updated Vendor: {vendorDetails.Id}")
-                : Results.Problem(outcome.ToString());
+                : Results.BadRequest(outcome.ToString());
         }
         catch (Exception ex)
         {

@@ -35,7 +35,7 @@ const vendorApiConnector = {
     
     createVendor: async (vendor: VendorDto) : Promise<void> => {
         try {
-            await axios.post(`${VENDOR_API_BASE_URL}/api/vendor}`, vendor)
+            await axios.post(`${VENDOR_API_BASE_URL}/api/vendor`, vendor)
         } catch(error) {
             console.log('Error creating vendor:', error);
             throw error;        
@@ -44,7 +44,7 @@ const vendorApiConnector = {
     
     editVendor: async (vendor: VendorDto) : Promise<void> => {
         try {
-            await axios.put(`${VENDOR_API_BASE_URL}/api/vendor}`, vendor)
+            await axios.put(`${VENDOR_API_BASE_URL}/api/vendor`, vendor)
         } catch(error) {
             console.log('Error editing vendor:', error);
             throw error;
