@@ -2,7 +2,8 @@
 Is a collection of keyboard related services
 
 Demonstrate the use of
-- Minimal API
+- Vite frontend - Keyboard-Hub Typescript
+- Minimal API - VendorAPI C#
 - JWT
 - Integration tests
   - using WebApplicationFactory and mocks
@@ -22,6 +23,9 @@ Call Vendor endpoints
 - add key `C1C6E14D94B32fdfasdfs57526E64D52181C61C`
 
 ## Troubleshooting
+
+### UI unable to connect to appsettings
+The VendorAPI is CORS configured by default to allow port localhost:5173. Update `appsettings.development.json` for different address.
 
 ### Certificate error on starting service
 Unhandled exception. System.InvalidOperationException: Unable to configure HTTPS endpoint. No server certificate was specified, and the default developer certificate could not be found or is out of date.
